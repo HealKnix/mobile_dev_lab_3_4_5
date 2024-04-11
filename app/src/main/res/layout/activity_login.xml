@@ -103,6 +103,7 @@
                 android:layout_marginBottom="2dp"
                 android:fontFamily="@font/sf_pro_rounded_regular"
                 android:letterSpacing="0.1"
+                android:textColor="#00FF00"
                 android:text="Пароль"
                 android:textSize="12dp" />
 
