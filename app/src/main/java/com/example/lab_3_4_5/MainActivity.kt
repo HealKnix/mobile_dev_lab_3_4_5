@@ -22,8 +22,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Переключение на активити с Постами
     fun toSignUpActivity(view: View?) {
         val intent = Intent(this, SignUpActivity::class.java)
+        startActivity(intent)
+    }
+
+    // Переключение на активити с Регистрацией
+    fun toPostsActivity(view: View?) {
+        val intent = Intent(this, PostsActivity::class.java)
         startActivity(intent)
     }
 }

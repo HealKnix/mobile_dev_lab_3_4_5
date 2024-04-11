@@ -126,6 +126,7 @@
             android:layout_marginTop="35dp"
             android:backgroundTint="@color/accent_color_1"
             android:fontFamily="@font/sf_pro_rounded_semibold"
+            android:onClick="toPostsActivity"
             android:text="Войти"
             app:cornerRadius="6dp"
             app:layout_constraintEnd_toEndOf="parent"
