@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_post_list" android:icon="@drawable/icon_nav_post_list" android:title="Посты" />
+    <item android:id="@+id/nav_post_create" android:icon="@drawable/icon_nav_post_create" android:title="Создать пост" />
+    <item android:id="@+id/nav_profile" android:icon="@drawable/icon_nav_profile" android:title="Профиль" />
+</menu>

@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/sign_up"
+    android:id="@+id/sign_up_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -36,37 +36,39 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:padding="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/some_id">
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="218dp"
-            android:layout_height="218dp"
-            android:layout_marginTop="25dp"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout2"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/sign_up_wallpaper" />
-
         <LinearLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:gravity="center_horizontal"
             android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView">
+            android:padding="15dp"
+            tools:layout_editor_absoluteX="15dp"
+            tools:layout_editor_absoluteY="15dp">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="25dp" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="218dp"
+                android:layout_height="218dp"
+                app:srcCompat="@drawable/sign_up_wallpaper" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="35dp" />
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
                 android:fontFamily="@font/sf_pro_rounded_regular"
                 android:letterSpacing="0.1"
                 android:text="E-Mail"
@@ -75,32 +77,28 @@
             <EditText
                 android:id="@+id/editTextTextEmailAddress"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:background="@drawable/input"
+                android:elevation="15dp"
                 android:ems="10"
                 android:fontFamily="@font/sf_pro_rounded_regular"
                 android:hint="www.test@gmail.com"
                 android:inputType="textEmailAddress"
                 android:letterSpacing="0.1"
+                android:outlineAmbientShadowColor="#38000000"
+
+                android:outlineSpotShadowColor="#38000000"
                 android:paddingLeft="15dp"
                 android:textSize="16dp" />
-        </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/textView6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="2dp"
                 android:fontFamily="@font/sf_pro_rounded_regular"
                 android:letterSpacing="0.1"
                 android:text="Пароль"
@@ -109,43 +107,46 @@
             <EditText
                 android:id="@+id/editTextTextPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:background="@drawable/input"
+                android:elevation="15dp"
                 android:ems="10"
                 android:hint="●●●●●●●●"
                 android:inputType="textPassword"
                 android:letterSpacing="0.1"
+                android:outlineAmbientShadowColor="#38000000"
+
+                android:outlineSpotShadowColor="#38000000"
                 android:paddingLeft="15dp"
                 android:textSize="16dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="25dp" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/accent_color_1"
+                android:fontFamily="@font/sf_pro_rounded_semibold"
+                android:text="Зарегистрироваться"
+                app:cornerRadius="6dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:backgroundTint="@color/dark_accent_color_1"
+                android:fontFamily="@font/sf_pro_rounded_semibold"
+                android:onClick="toLoginActivity"
+                android:text="Назад"
+                app:cornerRadius="6dp" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="35dp"
-            android:backgroundTint="@color/accent_color_1"
-            android:fontFamily="@font/sf_pro_rounded_semibold"
-            android:text="Зарегистрироваться"
-            app:cornerRadius="6dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="5dp"
-            android:backgroundTint="@color/dark_accent_color_1"
-            android:fontFamily="@font/sf_pro_rounded_semibold"
-            android:onClick="toLoginActivity"
-            android:text="Назад"
-            app:cornerRadius="6dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
