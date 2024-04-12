@@ -1,14 +1,13 @@
-package com.example.lab_3_4_5
+package com.example.lab_3_4_5.Activities
 
 import android.content.Intent
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.lab_3_4_5.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,7 +29,7 @@ class MainActivity : AppCompatActivity() {
 
     // Переключение на активити с Регистрацией
     fun toPostsActivity(view: View?) {
-        val intent = Intent(this, PostsActivity::class.java)
+        val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
     }
 }
