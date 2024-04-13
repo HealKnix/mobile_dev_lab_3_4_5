@@ -16,7 +16,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.sign_up_activity)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(0, 75, 0, 0)
             insets
         }
     }
