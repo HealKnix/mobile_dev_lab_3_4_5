@@ -131,6 +131,7 @@
                 android:backgroundTint="@color/accent_color_1"
                 android:fontFamily="@font/sf_pro_rounded_semibold"
                 android:text="Зарегистрироваться"
+                android:textSize="17sp"
                 app:cornerRadius="6dp" />
 
             <Space
@@ -145,6 +146,7 @@
                 android:fontFamily="@font/sf_pro_rounded_semibold"
                 android:onClick="toLoginActivity"
                 android:text="Назад"
+                android:textSize="17sp"
                 app:cornerRadius="6dp" />
         </LinearLayout>
 

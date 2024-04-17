@@ -136,6 +136,7 @@
                 android:fontFamily="@font/sf_pro_rounded_semibold"
                 android:onClick="toPostsActivity"
                 android:text="Войти"
+                android:textSize="17sp"
                 app:cornerRadius="6dp" />
 
             <Space

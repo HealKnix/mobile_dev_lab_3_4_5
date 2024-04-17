@@ -1,7 +1,6 @@
 package com.example.lab_3_4_5.Adapters
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +14,7 @@ import com.example.lab_3_4_5.R
 import com.example.lab_3_4_5.databinding.PostCardBinding
 
 class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
-    val postList = mutableListOf<Post>(
+    companion object val postList = mutableListOf<Post>(
         Post(
             0,
             "Пост №1",
@@ -59,7 +58,6 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
         return postList.size
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     fun addPost(post: Post) {
         postList.add(post)
         notifyDataSetChanged()
@@ -75,16 +73,14 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
 
                     binding.postLikeIcon.setImageDrawable(getDrawable(itemView.context, R.drawable.icon_heart_like_outlined))
                     binding.postLikeBtn.setBackgroundColor(getColor(itemView.context, R.color.btn_like_color))
-
-                    post.isLiked = false
                 } else {
                     binding.postLikeCount.setText(((binding.postLikeCount.text.toString()).toInt() + 1).toString())
 
                     binding.postLikeIcon.setImageDrawable(getDrawable(itemView.context, R.drawable.icon_heart_like_filled))
                     binding.postLikeBtn.setBackgroundColor(getColor(itemView.context, R.color.btn_like_active_color))
-
-                    post.isLiked = true
                 }
+
+                post.isLiked = !post.isLiked
             }
 
             binding.postTitle.text = post.title

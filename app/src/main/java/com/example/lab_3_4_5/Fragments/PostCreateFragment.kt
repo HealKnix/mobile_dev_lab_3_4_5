@@ -1,10 +1,17 @@
 package com.example.lab_3_4_5.Fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import com.example.lab_3_4_5.Adapters.PostAdapter
+import com.example.lab_3_4_5.Models.Post
 import com.example.lab_3_4_5.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -22,6 +29,8 @@ class PostCreateFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private val adapter: PostAdapter = PostAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -30,12 +39,28 @@ class PostCreateFragment : Fragment() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_post_create, container, false)
+        val view = inflater.inflate(R.layout.fragment_post_create, container, false)
+        val createPostBtn = view.findViewById<Button>(R.id.create_post_btn)
+        val postTitle = view.findViewById<TextView>(R.id.textViewTitleText).text
+        val postDescription = view.findViewById<TextView>(R.id.textViewDescriptionText).text
+        createPostBtn.setOnClickListener {
+            adapter.addPost(Post(
+                555,
+                "123321312",
+                "dwadawdawdaw",
+                0,
+                false
+            ))
+
+            Log.d("post_create", adapter.itemCount.toString())
+        }
+        return view
     }
 
     companion object {
