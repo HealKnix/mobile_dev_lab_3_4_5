@@ -20,6 +20,7 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
                 0,
                 "Пост №1",
                 "Идейные соображения высшего порядка, а также дальнейшее развитие различных форм деятельности требует от нас анализа переосмысления внешнеэкономических политик.",
+                "@HealKnix",
                 234323324,
                 true
             ),
@@ -27,6 +28,7 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
                 1,
                 "Пост №2",
                 "Сложно сказать, почему ключевые особенности структуры проекта, превозмогая сложившуюся непростую экономическую ситуацию, преданы социально-демократической анафеме.",
+                "@HealKnix",
                 0,
                 false
             ),
@@ -34,6 +36,7 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
                 2,
                 "Пост №3",
                 "Также как постоянное информационно-пропагандистское обеспечение нашей деятельности предопределяет высокую востребованность первоочередных требований.",
+                "@HealKnix",
                 532,
                 true
             ),
@@ -41,6 +44,7 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
                 3,
                 "Пост №4",
                 "Предварительные выводы неутешительны: новая модель организационной деятельности однозначно фиксирует необходимость модели развития. Мы вынуждены отталкиваться от того, что перспективное планирование прекрасно подходит для реализации стандартных подходов. Вот вам яркий пример современных тенденций — социально-экономическое развитие предполагает независимые способы реализации экономической целесообразности принимаемых решений.",
+                "@HealKnix",
                 23,
                 false
             )
@@ -87,6 +91,7 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
 
             binding.postTitle.text = post.title
             binding.postText.text = post.text
+            binding.createdBy.text = post.createdBy.lowercase()
             binding.postLikeCount.text = post.likes.toString()
 
             if (post.isLiked) {

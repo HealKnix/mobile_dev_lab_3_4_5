@@ -4,6 +4,7 @@ data class Post(
     var id: Int,
     var title: String,
     var text: String,
+    var createdBy: String,
     var likes: Int,
     var isLiked: Boolean
 )

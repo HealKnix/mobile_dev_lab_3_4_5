@@ -53,7 +53,7 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="25dp" />
+                android:layout_height="15dp" />
 
             <ImageView
                 android:id="@+id/imageView"
@@ -63,7 +63,37 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="35dp" />
+                android:layout_height="25dp" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf_pro_rounded_regular"
+                android:letterSpacing="0.1"
+                android:text="Логин"
+                android:textSize="12dp" />
+
+            <EditText
+                android:id="@+id/editTextTextLogin"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@drawable/input"
+                android:elevation="15dp"
+                android:ems="10"
+                android:fontFamily="@font/sf_pro_rounded_regular"
+                android:hint="username"
+                android:inputType="text|textPersonName"
+                android:letterSpacing="0.1"
+                android:outlineAmbientShadowColor="#38000000"
+
+                android:outlineSpotShadowColor="#38000000"
+                android:paddingLeft="15dp"
+                android:textSize="16dp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
 
             <TextView
                 android:id="@+id/textView5"

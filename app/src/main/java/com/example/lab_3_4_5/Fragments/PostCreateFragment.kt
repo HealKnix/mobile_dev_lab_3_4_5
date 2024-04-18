@@ -51,9 +51,10 @@ class PostCreateFragment : Fragment() {
         val createPostBtn = view.findViewById<Button>(R.id.create_post_btn)
         val postTitle = view.findViewById<TextView>(R.id.textViewTitleText).text
         val postDescription = view.findViewById<TextView>(R.id.textViewDescriptionText).text
+        val postUsername = "HealKnix"
 
         createPostBtn.setOnClickListener {
-            if (postTitle.toString().equals("") || postDescription.toString().equals("")) {
+            if (postTitle.toString() == "" || postDescription.toString() == "") {
                 Toast.makeText(context, "Одно из полей пустое!", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -62,6 +63,7 @@ class PostCreateFragment : Fragment() {
                 adapter.itemCount + 1,
                 postTitle.toString(),
                 postDescription.toString(),
+                "@${postUsername}",
                 0,
                 false
             ))

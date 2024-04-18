@@ -59,7 +59,20 @@
 
             <Space
                 android:layout_width="match_parent"
-                android:layout_height="25dp" />
+                android:layout_height="5dp" />
+
+            <TextView
+                android:id="@+id/created_by"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf_pro_rounded_regular"
+                android:text="\@healknix"
+                android:textColor="@color/text_primary_3"
+                android:textSize="12sp" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="5dp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/post_card_btn"
