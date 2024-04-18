@@ -16,6 +16,7 @@ import com.example.lab_3_4_5.Adapters.PostAdapter
 import com.example.lab_3_4_5.Models.Post
 import com.example.lab_3_4_5.R
 import com.example.lab_3_4_5.databinding.FragmentPostListBinding
+import kotlin.random.Random
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -34,6 +35,8 @@ class PostListFragment : Fragment() {
 
     lateinit var binding: FragmentPostListBinding
     private val adapter = PostAdapter()
+
+    private var testPostIndex: Int = 500
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,6 +57,18 @@ class PostListFragment : Fragment() {
         val rcv = view.findViewById<RecyclerView>(R.id.PostsRecyclerView)
         rcv?.layoutManager = LinearLayoutManager(context)
         rcv?.adapter = adapter
+
+        val createPostBtn = view.findViewById<Button>(R.id.create_post_btn)
+        createPostBtn.setOnClickListener {
+            adapter.addPost(Post(
+                adapter.itemCount + 1,
+                "Тестовый заголовок №${adapter.itemCount + 1}",
+                "Тестовый текст для описания поста №${adapter.itemCount + 1}\nвцфвфцвцф213321213\nвфц132312вфцвфц3211",
+                Random.nextInt(1, 50_000),
+                Random.nextBoolean()
+            ))
+            rcv.smoothScrollToPosition(adapter.itemCount - 1)
+        }
 
         return view
     }
