@@ -115,7 +115,6 @@
                     android:paddingTop="12dp"
                     android:paddingRight="15dp"
                     android:paddingBottom="12dp"
-                    android:textAlignment="viewStart"
                     android:textSize="16dp" />
 
                 <Space

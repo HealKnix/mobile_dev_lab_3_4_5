@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab_3_4_5.Adapters.PostAdapter
@@ -46,20 +47,26 @@ class PostCreateFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_post_create, container, false)
+
         val createPostBtn = view.findViewById<Button>(R.id.create_post_btn)
         val postTitle = view.findViewById<TextView>(R.id.textViewTitleText).text
         val postDescription = view.findViewById<TextView>(R.id.textViewDescriptionText).text
+
         createPostBtn.setOnClickListener {
+            if (postTitle.toString().equals("") || postDescription.toString().equals("")) {
+                Toast.makeText(context, "Одно из полей пустое!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             adapter.addPost(Post(
-                555,
-                "123321312",
-                "dwadawdawdaw",
+                adapter.itemCount + 1,
+                postTitle.toString(),
+                postDescription.toString(),
                 0,
                 false
             ))
-
-            Log.d("post_create", adapter.itemCount.toString())
         }
+
         return view
     }
 
