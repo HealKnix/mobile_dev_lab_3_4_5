@@ -61,8 +61,8 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="218dp"
-                android:layout_height="218dp"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 app:srcCompat="@drawable/login_wallpaper" />
 
             <Space
@@ -79,9 +79,9 @@
                 android:textSize="12dp" />
 
             <EditText
-                android:id="@+id/editTextTextEmailAddress"
+                android:id="@+id/editTextTextEmailAddressLogin"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="wrap_content"
                 android:background="@drawable/input"
                 android:elevation="15dp"
                 android:ems="10"
@@ -89,10 +89,11 @@
                 android:hint="www.test@gmail.com"
                 android:inputType="textEmailAddress"
                 android:letterSpacing="0.1"
-                android:outlineAmbientShadowColor="#38000000"
 
+                android:minHeight="48dp"
+                android:outlineAmbientShadowColor="#38000000"
                 android:outlineSpotShadowColor="#38000000"
-                android:paddingLeft="15dp"
+                android:padding="10dp"
                 android:textSize="16dp" />
 
             <Space
@@ -109,7 +110,7 @@
                 android:textSize="12dp" />
 
             <EditText
-                android:id="@+id/editTextTextPassword"
+                android:id="@+id/editTextTextPasswordLogin"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@drawable/input"
@@ -118,10 +119,11 @@
                 android:hint="●●●●●●●●"
                 android:inputType="textPassword"
                 android:letterSpacing="0.1"
-                android:outlineAmbientShadowColor="#38000000"
+                android:minHeight="48dp"
 
+                android:outlineAmbientShadowColor="#38000000"
                 android:outlineSpotShadowColor="#38000000"
-                android:paddingLeft="15dp"
+                android:padding="10dp"
                 android:textSize="16dp" />
 
             <Space
@@ -134,7 +136,7 @@
                 android:layout_height="50dp"
                 android:backgroundTint="@color/accent_color_1"
                 android:fontFamily="@font/sf_pro_rounded_semibold"
-                android:onClick="toPostsActivity"
+                android:onClick="login"
                 android:text="Войти"
                 android:textSize="17sp"
                 app:cornerRadius="6dp" />
