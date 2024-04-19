@@ -2,7 +2,6 @@ package com.example.lab_3_4_5.Activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -13,10 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.lab_3_4_5.Models.User
 import com.example.lab_3_4_5.R
 import com.example.lab_3_4_5.databinding.ActivitySignUpBinding
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 class SignUpActivity : AppCompatActivity() {
     private val firebaseRef = FirebaseDatabase.getInstance().getReference("Users")
@@ -35,51 +31,44 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun fetchUsersData(login: String, email: String, password: String) {
-                firebaseRef.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                User.userList.clear()
+        firebaseRef.get().addOnCompleteListener {
+            User.setCurrentUser(null)
+            User.userList.clear()
 
-                val newUser = User(
-                    0,
-                    login,
-                    email,
-                    password
-                )
+            val newUser = User(
+                0,
+                login,
+                email,
+                password
+            )
 
-                if (snapshot.exists()) {
-                    for (userSnap in snapshot.children) {
-                        val user = userSnap.getValue(User::class.java)!!
-                        if (user.login == newUser.login || user.email == newUser.email) {
-                            Toast.makeText(applicationContext, "Такой пользователь уже существует", Toast.LENGTH_SHORT).show()
-                            return
-                        }
-                        User.userList.add(user)
-                    }
+            for (userSnap in it.result.children) {
+                val user = userSnap.getValue(User::class.java)!!
+                if (user.login == newUser.login || user.email == newUser.email) {
+                    Toast.makeText(applicationContext, "Такой пользователь уже существует", Toast.LENGTH_SHORT).show()
+                    User.userList.clear()
+                    return@addOnCompleteListener
                 }
-
-                if (User.userList.isNotEmpty())
-                    newUser.id = User.userList[User.userList.count() - 1].id + 1
-
-                User.userList.add(newUser)
-                User.setCurrentUser(newUser)
-
-                firebaseRef.child(newUser.id.toString()).setValue(newUser)
-                    .addOnCompleteListener {
-                        Toast.makeText(applicationContext, "Пользователь зарегистрирован", Toast.LENGTH_SHORT).show()
-                    }
-                    .addOnFailureListener {
-                        Toast.makeText(applicationContext, "Ошибка регистрации пользователя", Toast.LENGTH_SHORT).show()
-                    }
-
-                val intent = Intent(applicationContext, HomeActivity::class.java)
-                startActivity(intent)
+                User.userList.add(user)
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(applicationContext, "Ошибка загрузки данных о пользователях", Toast.LENGTH_SHORT).show()
-                Log.d("sign_up", "Failed to read value.", error.toException())
-            }
-        })
+            if (User.userList.isNotEmpty())
+                newUser.id = User.userList.last().id + 1
+
+
+            firebaseRef.child(newUser.id.toString()).setValue(newUser)
+                .addOnCompleteListener {
+                    User.setCurrentUser(newUser)
+
+                    Toast.makeText(applicationContext, "Пользователь зарегистрирован", Toast.LENGTH_SHORT).show()
+
+                    val intent = Intent(applicationContext, HomeActivity::class.java)
+                    startActivity(intent)
+                }
+                .addOnFailureListener {
+                    Toast.makeText(applicationContext, "Ошибка регистрации пользователя", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
     fun signUp(view: View?) {

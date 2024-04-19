@@ -4,7 +4,8 @@ data class Post(
     var id: Int = -1,
     var title: String = "",
     var text: String = "",
-    var createdBy: Int = -1,
+    var createdByUserId: Int = -1,
+    var createdByUserName: String = "",
+    val likedByUsers: MutableList<Int> = mutableListOf<Int>(),
     var likes: Int = 0,
-    var isLiked: Boolean = false
 )

@@ -1,9 +1,7 @@
 package com.example.lab_3_4_5.Fragments
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,16 +9,11 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
-import com.example.lab_3_4_5.Activities.HomeActivity
 import com.example.lab_3_4_5.Adapters.PostAdapter
 import com.example.lab_3_4_5.Models.Post
 import com.example.lab_3_4_5.Models.User
 import com.example.lab_3_4_5.R
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -69,15 +62,19 @@ class PostCreateFragment : Fragment() {
             if (postTitle.text.isEmpty() || postDescription.text.isEmpty())
                 return@setOnClickListener
 
-            val postId = PostAdapter.postList.last().id + 1
+            var postId = 0
+
+            if (adapter.getPosts().isNotEmpty())
+                postId = adapter.getPosts().last().id + 1
 
             val newPost = Post(
                 postId,
                 postTitle.text.toString(),
                 postDescription.text.toString(),
                 User.getCurrentUser()?.id ?: -1,
-                0,
-                false
+                User.getCurrentUser()?.login ?: "",
+                mutableListOf<Int>(),
+                0
             )
 
             firebaseRef.child(postId.toString()).setValue(newPost)

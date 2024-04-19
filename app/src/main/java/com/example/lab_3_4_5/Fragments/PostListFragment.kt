@@ -6,23 +6,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
-import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab_3_4_5.Adapters.PostAdapter
 import com.example.lab_3_4_5.Models.Post
-import com.example.lab_3_4_5.Models.User
 import com.example.lab_3_4_5.R
 import com.example.lab_3_4_5.databinding.FragmentPostListBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import kotlin.random.Random
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,25 +48,21 @@ class PostListFragment : Fragment() {
     }
 
     private fun fetchPostsData() {
-        firebaseRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    adapter.clearPosts()
-                    for (postSnap in snapshot.children) {
-                        val post = postSnap.getValue(Post::class.java)
-                        adapter.addPost(post!!)
-                    }
+        firebaseRef.addValueEventListener(object: ValueEventListener {
 
-                    val rcv = view.findViewById<RecyclerView>(R.id.PostsRecyclerView)
-                    rcv?.layoutManager = LinearLayoutManager(context)
-                    rcv?.adapter = adapter
+            override fun onDataChange(snapshot: DataSnapshot) {
+                adapter.clearPosts()
+
+                for (postSnap in snapshot.children) {
+                    val post = postSnap.getValue(Post::class.java)!!
+                    adapter.addPost(post)
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(context, "Ошибка загрузки данных о постах", Toast.LENGTH_SHORT).show()
-                Log.d("sign_up", "Failed to read value.", error.toException())
+                Log.w("post_list", "Failed to read value.", error.toException())
             }
+
         })
     }
 
@@ -85,6 +74,10 @@ class PostListFragment : Fragment() {
         view = inflater.inflate(R.layout.fragment_post_list, container, false)
 
         fetchPostsData()
+
+        val rcv = view.findViewById<RecyclerView>(R.id.PostsRecyclerView)
+        rcv?.layoutManager = LinearLayoutManager(context)
+        rcv?.adapter = adapter
 
         return view
     }

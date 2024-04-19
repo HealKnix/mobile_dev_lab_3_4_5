@@ -35,9 +35,9 @@ class MainActivity : AppCompatActivity() {
         firebaseRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 User.userList.clear()
+                User.setCurrentUser(null)
 
                 if (snapshot.exists()) {
-                    Log.d("test", "$email | $password")
                     for (userSnap in snapshot.children) {
                         val user = userSnap.getValue(User::class.java)!!
 
@@ -53,7 +53,6 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                User.setCurrentUser(null)
                 Toast.makeText(applicationContext, "Такой пользователь не найден", Toast.LENGTH_SHORT).show()
             }
 
