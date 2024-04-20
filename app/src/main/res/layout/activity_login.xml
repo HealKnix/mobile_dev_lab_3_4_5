@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sf_pro_rounded_regular"
                 android:letterSpacing="0.1"
-                android:text="E-Mail"
+                android:text="E-Mail или Логин*"
                 android:textColor="@color/text_primary_1"
                 android:textSize="12dp" />
 
@@ -88,7 +88,7 @@
                 android:elevation="15dp"
                 android:ems="10"
                 android:fontFamily="@font/sf_pro_rounded_regular"
-                android:hint="www.test@gmail.com"
+                android:hint="Ввод почты или логина"
                 android:inputType="textEmailAddress"
                 android:letterSpacing="0.1"
 
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/sf_pro_rounded_regular"
                 android:letterSpacing="0.1"
-                android:text="Пароль"
+                android:text="Пароль*"
                 android:textColor="@color/text_primary_1"
                 android:textSize="12dp" />
 

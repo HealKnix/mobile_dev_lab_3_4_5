@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sf_pro_rounded_regular"
                     android:letterSpacing="0.1"
-                    android:text="Заголовок"
+                    android:text="Заголовок*"
                     android:textColor="@color/text_primary_1"
                     android:textSize="12dp" />
 
@@ -98,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sf_pro_rounded_regular"
                     android:letterSpacing="0.1"
-                    android:text="Описание"
+                    android:text="Описание*"
                     android:textColor="@color/text_primary_1"
                     android:textSize="12dp" />
 

@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.example.lab_3_4_5.Adapters.PostAdapter
 import com.example.lab_3_4_5.Models.Post
 import com.example.lab_3_4_5.Models.User
@@ -80,6 +81,7 @@ class PostCreateFragment : Fragment() {
             firebaseRef.child(postId.toString()).setValue(newPost)
                 .addOnCompleteListener {
                     Toast.makeText(context, "Пост '${postTitle.text}' создан", Toast.LENGTH_SHORT).show()
+                    replaceFragment(PostListFragment())
                 }
                 .addOnFailureListener {
                     Toast.makeText(context, "Ошибка создания поста", Toast.LENGTH_SHORT).show()
@@ -87,6 +89,13 @@ class PostCreateFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = parentFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.replace(R.id.fragmentContainerView, fragment)
+        fragmentTransaction.commit()
     }
 
     companion object {

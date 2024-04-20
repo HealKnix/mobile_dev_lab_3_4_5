@@ -92,7 +92,7 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
 
             binding.postTitle.text = post.title
             binding.postText.text = post.text
-            binding.createdByUserName.text = "@${post.createdByUserName}"
+            binding.createdByUserName.text = "@${post.createdByUserName}".lowercase()
             binding.postLikeCount.text = post.likedByUsers.count().toString()
 
             var isLiked = false

@@ -44,7 +44,7 @@ class SignUpActivity : AppCompatActivity() {
 
             for (userSnap in it.result.children) {
                 val user = userSnap.getValue(User::class.java)!!
-                if (user.login == newUser.login || user.email == newUser.email) {
+                if (user.login.lowercase() == newUser.login.lowercase() || user.email.lowercase() == newUser.email.lowercase()) {
                     Toast.makeText(applicationContext, "Такой пользователь уже существует", Toast.LENGTH_SHORT).show()
                     User.userList.clear()
                     return@addOnCompleteListener

@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             for (userSnap in userListFromDB.children) {
                 val user = userSnap.getValue(User::class.java)!!
 
-                if (user.email == email && user.password == User.md5(password)) {
+                if ((user.login.lowercase() == email.lowercase() || user.email.lowercase() == email.lowercase()) && user.password == User.md5(password)) {
                     User.setCurrentUser(user)
                     Toast.makeText(applicationContext, "Вы успешно вошли", Toast.LENGTH_SHORT).show()
 

@@ -64,7 +64,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sf_pro_rounded_regular"
                     android:letterSpacing="0.1"
-                    android:text="Логин"
+                    android:text="Логин*"
                     android:textColor="@color/text_primary_1"
                     android:textSize="12dp" />
 
@@ -76,7 +76,7 @@
                     android:elevation="15dp"
                     android:ems="10"
                     android:fontFamily="@font/sf_pro_rounded_regular"
-                    android:hint="Ваш логин"
+                    android:hint="Введите ваш логин"
                     android:inputType="text|textLongMessage"
                     android:letterSpacing="0.1"
                     android:minHeight="48dp"
@@ -98,7 +98,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sf_pro_rounded_regular"
                     android:letterSpacing="0.1"
-                    android:text="E-mail"
+                    android:text="E-mail*"
                     android:textColor="@color/text_primary_1"
                     android:textSize="12dp" />
 
@@ -110,7 +110,7 @@
                     android:elevation="15dp"
                     android:ems="10"
                     android:fontFamily="@font/sf_pro_rounded_regular"
-                    android:hint="Ваш логин"
+                    android:hint="Введите вашу почту"
                     android:inputType="text|textLongMessage"
                     android:letterSpacing="0.1"
                     android:minHeight="48dp"
@@ -132,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/sf_pro_rounded_regular"
                     android:letterSpacing="0.1"
-                    android:text="Пароль"
+                    android:text="Пароль (введите, если хотите его поменять)"
                     android:textColor="@color/text_primary_1"
                     android:textSize="12dp" />
 
@@ -144,7 +144,7 @@
                     android:elevation="15dp"
                     android:ems="10"
                     android:fontFamily="@font/sf_pro_rounded_regular"
-                    android:hint="Новый пароль"
+                    android:hint="Введите новый пароль"
                     android:inputType="text|textPassword"
                     android:letterSpacing="0.1"
                     android:minHeight="48dp"
