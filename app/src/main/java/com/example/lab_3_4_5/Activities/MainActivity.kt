@@ -32,35 +32,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchUsersData(email: String, password: String) {
-        firebaseRef.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                User.userList.clear()
-                User.setCurrentUser(null)
+        firebaseRef.get().addOnCompleteListener {
+            User.userList.clear()
+            User.setCurrentUser(null)
 
-                if (snapshot.exists()) {
-                    for (userSnap in snapshot.children) {
-                        val user = userSnap.getValue(User::class.java)!!
+            val userListFromDB = it.result
 
-                        if (user.email == email && user.password == password) {
-                            User.setCurrentUser(user)
-                            Toast.makeText(applicationContext, "Вы успешно вошли", Toast.LENGTH_SHORT).show()
+            for (userSnap in userListFromDB.children) {
+                val user = userSnap.getValue(User::class.java)!!
 
-                            val intent = Intent(applicationContext, HomeActivity::class.java)
-                            startActivity(intent)
+                if (user.email == email && user.password == password) {
+                    User.setCurrentUser(user)
+                    Toast.makeText(applicationContext, "Вы успешно вошли", Toast.LENGTH_SHORT).show()
 
-                            return
-                        }
-                    }
+                    val intent = Intent(applicationContext, HomeActivity::class.java)
+                    startActivity(intent)
+
+                    return@addOnCompleteListener
                 }
-
-                Toast.makeText(applicationContext, "Такой пользователь не найден", Toast.LENGTH_SHORT).show()
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(applicationContext, "Ошибка загрузки данных о пользователях", Toast.LENGTH_SHORT).show()
-                Log.d("sign_up", "Failed to read value.", error.toException())
-            }
-        })
+            Toast.makeText(applicationContext, "Такой пользователь не найден", Toast.LENGTH_SHORT).show()
+        }
     }
 
     fun login(view: View?) {

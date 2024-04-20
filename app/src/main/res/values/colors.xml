@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="accent_color_1">#6979F8</color>
+    <color name="accent_color_2">#FF6C75</color>
     <color name="dark_accent_color_1">#503A7B</color>
 
     <color name="btn_like_color">#0A9E9E9E</color>
@@ -12,6 +13,7 @@
     <color name="text_primary_1">#1A051D</color>
     <color name="text_primary_2">#3F3356</color>
     <color name="text_primary_3">#D0C9D6</color>
+    <color name="text_primary_4">#BDB7BE</color>
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>

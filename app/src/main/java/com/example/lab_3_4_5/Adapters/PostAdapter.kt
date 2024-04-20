@@ -114,6 +114,25 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
                 }
             }
 
+            if (post.createdByUserId == userId) {
+                binding.deletePostBtn.visibility = View.VISIBLE
+                binding.deletePostBtn.setOnClickListener {
+                    binding.postCard.visibility = View.GONE
+                    binding.postWrapper.setPadding(0, 0, 0, 0)
+                    binding.postWrapper.visibility = View.GONE
+
+                    firebaseRef.child(post.id.toString()).removeValue()
+                        .addOnCompleteListener {
+                            Log.d("post_liked", "Пользователь с id{${userId}} удалил пост с id{${post.id}}")
+                        }
+                        .addOnFailureListener {
+                            Log.d("post_liked", "Ошибка удаление поста")
+                        }
+                }
+            } else {
+                binding.deletePostBtn.visibility = View.GONE
+            }
+
             if (isLiked) {
                 binding.postLikeIcon.setImageDrawable(getDrawable(itemView.context, R.drawable.icon_heart_like_filled))
                 binding.postLikeBtn.setBackgroundColor(getColor(itemView.context, R.color.btn_like_active_color))

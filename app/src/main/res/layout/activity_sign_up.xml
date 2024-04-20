@@ -24,10 +24,11 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/sf_pro_rounded_heavy"
+        android:letterSpacing="0.1"
         android:text="Регистрация"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@color/text_primary_1"
         android:textSize="24dp"
-        android:letterSpacing="0.1"
         app:layout_constraintBottom_toBottomOf="@+id/some_id"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/some_id"
@@ -72,6 +73,7 @@
                 android:fontFamily="@font/sf_pro_rounded_regular"
                 android:letterSpacing="0.1"
                 android:text="Логин"
+                android:textColor="@color/text_primary_1"
                 android:textSize="12dp" />
 
             <EditText
@@ -90,6 +92,8 @@
                 android:outlineAmbientShadowColor="#38000000"
                 android:outlineSpotShadowColor="#38000000"
                 android:padding="10dp"
+                android:textColor="@color/text_primary_1"
+                android:textColorHint="@color/text_primary_4"
                 android:textSize="16dp" />
 
             <Space
@@ -103,6 +107,7 @@
                 android:fontFamily="@font/sf_pro_rounded_regular"
                 android:letterSpacing="0.1"
                 android:text="E-Mail"
+                android:textColor="@color/text_primary_1"
                 android:textSize="12dp" />
 
             <EditText
@@ -121,6 +126,8 @@
                 android:outlineAmbientShadowColor="#38000000"
                 android:outlineSpotShadowColor="#38000000"
                 android:padding="10dp"
+                android:textColor="@color/text_primary_1"
+                android:textColorHint="@color/text_primary_4"
                 android:textSize="16dp" />
 
             <Space
@@ -134,6 +141,7 @@
                 android:fontFamily="@font/sf_pro_rounded_regular"
                 android:letterSpacing="0.1"
                 android:text="Пароль"
+                android:textColor="@color/text_primary_1"
                 android:textSize="12dp" />
 
             <EditText
@@ -151,6 +159,8 @@
                 android:outlineAmbientShadowColor="#38000000"
                 android:outlineSpotShadowColor="#38000000"
                 android:padding="10dp"
+                android:textColor="@color/text_primary_1"
+                android:textColorHint="@color/text_primary_4"
                 android:textSize="16dp" />
 
             <Space
@@ -165,6 +175,7 @@
                 android:fontFamily="@font/sf_pro_rounded_semibold"
                 android:onClick="signUp"
                 android:text="Зарегистрироваться"
+                android:textColor="@color/white"
                 android:textSize="17sp"
                 app:cornerRadius="6dp" />
 
@@ -180,6 +191,7 @@
                 android:fontFamily="@font/sf_pro_rounded_semibold"
                 android:onClick="toLoginActivity"
                 android:text="Назад"
+                android:textColor="@color/white"
                 android:textSize="17sp"
                 app:cornerRadius="6dp" />
         </LinearLayout>
