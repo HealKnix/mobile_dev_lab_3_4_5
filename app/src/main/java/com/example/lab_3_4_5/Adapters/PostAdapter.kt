@@ -71,11 +71,6 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
                     post.likedByUsers.add(userId)
                 }
 
-                var likeCount = 0
-                post.likedByUsers.forEach {
-                    likeCount++
-                }
-
                 val newPost = Post(
                     post.id,
                     post.title,
@@ -83,7 +78,7 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
                     post.createdByUserId,
                     post.createdByUserName,
                     post.likedByUsers,
-                    likeCount
+                    post.likedByUsers.count()
                 )
 
                 firebaseRef.child(post.id.toString()).setValue(newPost)
@@ -95,15 +90,10 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
                     }
             }
 
-            var likeCount = 0
-            post.likedByUsers.forEach {
-                likeCount++
-            }
-
             binding.postTitle.text = post.title
             binding.postText.text = post.text
             binding.createdByUserName.text = "@${post.createdByUserName}"
-            binding.postLikeCount.text = post.likes.toString()
+            binding.postLikeCount.text = post.likedByUsers.count().toString()
 
             var isLiked = false
 

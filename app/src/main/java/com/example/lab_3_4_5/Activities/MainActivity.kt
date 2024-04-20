@@ -2,7 +2,6 @@ package com.example.lab_3_4_5.Activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -12,10 +11,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.lab_3_4_5.Models.User
 import com.example.lab_3_4_5.R
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 
 class MainActivity : AppCompatActivity() {
     private val firebaseRef = FirebaseDatabase.getInstance().getReference("Users")
@@ -41,12 +37,14 @@ class MainActivity : AppCompatActivity() {
             for (userSnap in userListFromDB.children) {
                 val user = userSnap.getValue(User::class.java)!!
 
-                if (user.email == email && user.password == password) {
+                if (user.email == email && user.password == User.md5(password)) {
                     User.setCurrentUser(user)
                     Toast.makeText(applicationContext, "Вы успешно вошли", Toast.LENGTH_SHORT).show()
 
                     val intent = Intent(applicationContext, HomeActivity::class.java)
                     startActivity(intent)
+
+                    finish()
 
                     return@addOnCompleteListener
                 }

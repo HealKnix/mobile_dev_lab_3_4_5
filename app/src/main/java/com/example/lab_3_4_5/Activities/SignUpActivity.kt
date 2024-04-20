@@ -39,7 +39,7 @@ class SignUpActivity : AppCompatActivity() {
                 0,
                 login,
                 email,
-                password
+                User.md5(password)
             )
 
             for (userSnap in it.result.children) {
@@ -61,6 +61,8 @@ class SignUpActivity : AppCompatActivity() {
                     User.setCurrentUser(newUser)
 
                     Toast.makeText(applicationContext, "Пользователь зарегистрирован", Toast.LENGTH_SHORT).show()
+
+                    finish()
 
                     val intent = Intent(applicationContext, HomeActivity::class.java)
                     startActivity(intent)

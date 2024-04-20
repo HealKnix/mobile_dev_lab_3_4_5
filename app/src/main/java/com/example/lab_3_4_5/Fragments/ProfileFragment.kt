@@ -1,14 +1,20 @@
 package com.example.lab_3_4_5.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
+import android.widget.Toast
+import com.example.lab_3_4_5.Activities.MainActivity
 import com.example.lab_3_4_5.Models.User
 import com.example.lab_3_4_5.R
 import com.example.lab_3_4_5.databinding.FragmentProfileBinding
+import com.google.firebase.database.FirebaseDatabase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -45,10 +51,80 @@ class ProfileFragment : Fragment() {
 
         val login = view.findViewById<EditText>(R.id.textViewProfileLogin)
         val email = view.findViewById<EditText>(R.id.textViewProfileEmail)
-        val password = view.findViewById<EditText>(R.id.textViewProfilePassword)
 
         login.setText(User.getCurrentUser()?.login)
         email.setText(User.getCurrentUser()?.email)
+
+        val updateUserBtn = view.findViewById<Button>(R.id.update_profile_btn)
+        val logoutBtn = view.findViewById<Button>(R.id.logout_btn)
+
+        updateUserBtn.setOnClickListener {
+            val firebaseDB = FirebaseDatabase.getInstance().getReference("Users")
+
+            val currentUser = User.getCurrentUser()
+
+            val password = view.findViewById<TextView>(R.id.textViewProfilePassword)
+
+            if (login.text.isEmpty())
+                login.error = "Пустое поле"
+            if (email.text.isEmpty())
+                email.error = "Пустое поле"
+
+            if (login.text.isEmpty() || email.text.isEmpty())
+                return@setOnClickListener
+
+            if (login.text.isEmpty() || email.text.isEmpty())
+                return@setOnClickListener
+
+            var newLogin: String = login.text.toString()
+            var newEmail: String = email.text.toString()
+            var newPassword: String = password.text.toString()
+
+            if (
+                login.text.toString() == currentUser?.login &&
+                email.text.toString() == currentUser.email &&
+                newPassword.isEmpty()
+            ) {
+                Toast.makeText(context, "Нечего обновлять", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (login.text.toString() == currentUser?.login) {
+                newLogin = currentUser.login
+            }
+            if (email.text.toString() == currentUser?.password) {
+                newEmail = currentUser.password
+            }
+            if (newPassword.isEmpty()) {
+                newPassword = currentUser?.password ?: newPassword
+            }
+
+            val updatedUser = currentUser?.let { user ->
+                User(
+                    user.id,
+                    newLogin,
+                    newEmail,
+                    User.md5(newPassword)
+                )
+            }
+
+            firebaseDB.child(currentUser?.id.toString()).setValue(updatedUser)
+                .addOnCompleteListener {
+                    password.text = ""
+                    Toast.makeText(context, "Пользователь обновлён", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(context, "Ошибка обновлении данныз о пользователе", Toast.LENGTH_SHORT).show()
+                }
+        }
+
+        logoutBtn.setOnClickListener {
+            User.setCurrentUser(null)
+            val intent = Intent(activity, MainActivity::class.java)
+            startActivity(intent)
+            Toast.makeText(activity, "Вы вышли из аккаунта", Toast.LENGTH_SHORT).show()
+            activity?.finish()
+        }
 
         return view
     }

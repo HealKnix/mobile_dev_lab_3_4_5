@@ -120,7 +120,7 @@
                 android:layout_height="48dp"
                 android:background="@drawable/input"
                 android:elevation="15dp"
-                android:hint="˙˙˙˙˙"
+                android:hint="∘∘∘∘∘∘∘∘"
                 android:inputType="textPassword"
                 android:letterSpacing="0.1"
                 android:minHeight="48dp"
