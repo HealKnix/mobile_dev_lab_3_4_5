@@ -1,6 +1,8 @@
 package com.example.lab_3_4_5.Activities
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -15,6 +17,7 @@ import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity : AppCompatActivity() {
     private val firebaseRef = FirebaseDatabase.getInstance().getReference("Users")
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +27,14 @@ class MainActivity : AppCompatActivity() {
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(0, 75, 0, 0)
             insets
+        }
+
+        sharedPreferences = getSharedPreferences("my_app_pref", Context.MODE_PRIVATE)
+
+        if (checkUserData()) {
+            val user = getUserData()
+
+            fetchUsersData(user?.first ?: "", user?.second ?: "")
         }
     }
 
@@ -37,9 +48,16 @@ class MainActivity : AppCompatActivity() {
             for (userSnap in userListFromDB.children) {
                 val user = userSnap.getValue(User::class.java)!!
 
-                if ((user.login.lowercase() == email.lowercase() || user.email.lowercase() == email.lowercase()) && user.password == User.md5(password)) {
+                if ((
+                        user.login.lowercase() == email.lowercase() ||
+                        user.email.lowercase() == email.lowercase()
+                    ) &&
+                    user.password == password)
+                {
                     User.setCurrentUser(user)
                     Toast.makeText(applicationContext, "Вы успешно вошли", Toast.LENGTH_SHORT).show()
+
+                    saveUserData(user.email, password)
 
                     val intent = Intent(applicationContext, HomeActivity::class.java)
                     startActivity(intent)
@@ -50,6 +68,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            clearUserData()
             Toast.makeText(applicationContext, "Такой пользователь не найден", Toast.LENGTH_SHORT).show()
         }
     }
@@ -66,7 +85,44 @@ class MainActivity : AppCompatActivity() {
         if (email.text.isEmpty() || password.text.isEmpty())
             return
 
-        fetchUsersData(email.text.toString(), password.text.toString())
+        fetchUsersData(email.text.toString(), User.md5(password.text.toString()))
+    }
+
+    // При успешном входе пользователя сохраняем его данные
+    fun saveUserData(email: String, password: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("email", email)
+        editor.putString("password", password)
+        editor.apply()
+    }
+
+    // Проверяем наличие сохраненных данных пользователя
+    fun checkUserData(): Boolean {
+        val email = sharedPreferences.getString("email", null)
+        val password = sharedPreferences.getString("password", null)
+
+        // Проверяем, что данные не пусты
+        return !(email.isNullOrEmpty() || password.isNullOrEmpty())
+    }
+
+    // Получаем сохраненные данные пользователя для автоматического входа
+    fun getUserData(): Pair<String, String>? {
+        val email = sharedPreferences.getString("email", null)
+        val password = sharedPreferences.getString("password", null)
+
+        // Возвращаем пару значений (email, password)
+        return if (!email.isNullOrEmpty() && !password.isNullOrEmpty()) {
+            Pair(email, password)
+        } else {
+            null
+        }
+    }
+
+    // Функция для удаления данных пользователя при выходе
+    fun clearUserData() {
+        val editor = sharedPreferences.edit()
+        editor.clear() // Удаляем все данные из SharedPreferences
+        editor.apply()
     }
 
     // Переключение на активити с Постами

@@ -22,6 +22,7 @@ data class User(
         }
 
         fun md5(input:String): String {
+            if (input.isEmpty()) return ""
             val md = MessageDigest.getInstance("MD5")
             return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
         }

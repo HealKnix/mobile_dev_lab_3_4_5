@@ -8,4 +8,6 @@ data class Post(
     var createdByUserName: String = "",
     val likedByUsers: MutableList<Int> = mutableListOf<Int>(),
     var likes: Int = 0,
+    val createdAt: String? = null,
+    val updatedAt: String? = null
 )

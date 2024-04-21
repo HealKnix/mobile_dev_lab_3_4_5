@@ -1,7 +1,10 @@
 package com.example.lab_3_4_5.Fragments
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -32,6 +35,7 @@ class ProfileFragment : Fragment() {
     private var param2: String? = null
 
     private lateinit var binding: FragmentProfileBinding
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +44,7 @@ class ProfileFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
         binding = FragmentProfileBinding.inflate(layoutInflater)
+        sharedPreferences = requireContext().getSharedPreferences("my_app_pref", Context.MODE_PRIVATE)
     }
 
     override fun onCreateView(
@@ -78,7 +83,7 @@ class ProfileFragment : Fragment() {
 
             var newLogin: String = login.text.toString()
             var newEmail: String = email.text.toString()
-            var newPassword: String = password.text.toString()
+            var newPassword: String = User.md5(password.text.toString())
 
             if (
                 login.text.toString() == currentUser?.login &&
@@ -104,12 +109,13 @@ class ProfileFragment : Fragment() {
                     user.id,
                     newLogin,
                     newEmail,
-                    User.md5(newPassword)
+                    newPassword
                 )
             }
 
             firebaseDB.child(currentUser?.id.toString()).setValue(updatedUser)
                 .addOnCompleteListener {
+                    saveUserData(newEmail, newPassword)
                     password.text = ""
                     Toast.makeText(context, "Пользователь обновлён", Toast.LENGTH_SHORT).show()
                 }
@@ -120,13 +126,33 @@ class ProfileFragment : Fragment() {
 
         logoutBtn.setOnClickListener {
             User.setCurrentUser(null)
+
+            clearUserData()
+
             val intent = Intent(activity, MainActivity::class.java)
             startActivity(intent)
+
             Toast.makeText(activity, "Вы вышли из аккаунта", Toast.LENGTH_SHORT).show()
+
             activity?.finish()
         }
 
         return view
+    }
+
+    // При успешном входе пользователя сохраняем его данные
+    fun saveUserData(email: String, password: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString("email", email)
+        editor.putString("password", password)
+        editor.apply()
+    }
+
+    // Функция для удаления данных пользователя при выходе
+    fun clearUserData() {
+        val editor = sharedPreferences.edit()
+        editor.clear() // Удаляем все данные из SharedPreferences
+        editor.apply()
     }
 
     companion object {

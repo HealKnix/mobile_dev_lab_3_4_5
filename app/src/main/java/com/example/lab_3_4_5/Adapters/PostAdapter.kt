@@ -12,6 +12,8 @@ import com.example.lab_3_4_5.Models.User
 import com.example.lab_3_4_5.R
 import com.example.lab_3_4_5.databinding.PostCardBinding
 import com.google.firebase.database.FirebaseDatabase
+import java.time.LocalDateTime
+import java.util.Date
 
 class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
     companion object {
@@ -53,9 +55,6 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
             val userId = User.getCurrentUser()?.id ?: -1
 
             binding.postCardBtn.setOnClickListener {
-                Log.d("qwerty", post.toString())
-                Log.d("qwerty", User.getCurrentUser().toString())
-
                 var isUserLikedPost = false
 
                 post.likedByUsers.forEach {
@@ -71,19 +70,17 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
                     post.likedByUsers.add(userId)
                 }
 
-                val newPost = Post(
-                    post.id,
-                    post.title,
-                    post.text,
-                    post.createdByUserId,
-                    post.createdByUserName,
-                    post.likedByUsers,
-                    post.likedByUsers.count()
-                )
-
-                firebaseRef.child(post.id.toString()).setValue(newPost)
+                firebaseRef.child(post.id.toString()).child("likedByUsers").setValue(post.likedByUsers)
                     .addOnCompleteListener {
                         Log.d("post_liked", "Пользователь с id{${userId}} поставил лайк на пост с id{${post.id}}")
+                    }
+                    .addOnFailureListener {
+                        Log.d("post_liked", "Ошибка")
+                    }
+
+                firebaseRef.child(post.id.toString()).child("likes").setValue(post.likedByUsers.count())
+                    .addOnCompleteListener {
+                        Log.d("post_liked", "Количество лайков на посте с id{${post.id}} составляет ${post.likedByUsers.count()}")
                     }
                     .addOnFailureListener {
                         Log.d("post_liked", "Ошибка")
@@ -94,6 +91,7 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
             binding.postText.text = post.text
             binding.createdByUserName.text = "@${post.createdByUserName}".lowercase()
             binding.postLikeCount.text = post.likedByUsers.count().toString()
+            binding.createdDate.text = post.createdAt
 
             var isLiked = false
 

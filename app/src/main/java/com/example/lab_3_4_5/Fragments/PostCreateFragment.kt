@@ -14,7 +14,9 @@ import com.example.lab_3_4_5.Adapters.PostAdapter
 import com.example.lab_3_4_5.Models.Post
 import com.example.lab_3_4_5.Models.User
 import com.example.lab_3_4_5.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.database.FirebaseDatabase
+import java.util.Date
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -68,6 +70,8 @@ class PostCreateFragment : Fragment() {
             if (adapter.getPosts().isNotEmpty())
                 postId = adapter.getPosts().last().id + 1
 
+            val timeNow = Date()
+
             val newPost = Post(
                 postId,
                 postTitle.text.toString(),
@@ -75,7 +79,9 @@ class PostCreateFragment : Fragment() {
                 User.getCurrentUser()?.id ?: -1,
                 User.getCurrentUser()?.login ?: "",
                 mutableListOf<Int>(),
-                0
+                0,
+                Date().toLocaleString(),
+                Date().toLocaleString(),
             )
 
             firebaseRef.child(postId.toString()).setValue(newPost)
