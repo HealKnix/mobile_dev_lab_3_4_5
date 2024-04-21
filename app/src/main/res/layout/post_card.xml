@@ -97,7 +97,7 @@
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:fontFamily="@font/sf_pro_rounded_regular"
-                        android:text="\@healknix"
+                        android:text="\@"
                         android:textColor="@color/text_primary_3"
                         android:textSize="14sp" />
 

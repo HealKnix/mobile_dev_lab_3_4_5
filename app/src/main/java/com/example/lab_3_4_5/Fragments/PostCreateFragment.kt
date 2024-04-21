@@ -77,7 +77,6 @@ class PostCreateFragment : Fragment() {
                 postTitle.text.toString(),
                 postDescription.text.toString(),
                 User.getCurrentUser()?.id ?: -1,
-                User.getCurrentUser()?.login ?: "",
                 mutableListOf<Int>(),
                 0,
                 Date().toLocaleString(),

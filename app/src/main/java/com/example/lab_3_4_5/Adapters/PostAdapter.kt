@@ -89,7 +89,21 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
 
             binding.postTitle.text = post.title
             binding.postText.text = post.text
-            binding.createdByUserName.text = "@${post.createdByUserName}".lowercase()
+
+            val fireDBUsers = FirebaseDatabase.getInstance().getReference("Users")
+            fireDBUsers.get().addOnCompleteListener {
+                val usersFromDB = it.result
+
+                for (userFromDB in usersFromDB.children) {
+                    val user = userFromDB.getValue(User::class.java)
+
+                    if (post.createdByUserId == user?.id) {
+                        binding.createdByUserName.text = "@${user?.login}".lowercase()
+                        return@addOnCompleteListener
+                    }
+                }
+            }
+
             binding.postLikeCount.text = post.likedByUsers.count().toString()
             binding.createdDate.text = post.createdAt
 
