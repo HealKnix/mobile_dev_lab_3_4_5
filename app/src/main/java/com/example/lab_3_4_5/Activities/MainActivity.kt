@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
 
             for (userSnap in userListFromDB.children) {
                 val user = userSnap.getValue(User::class.java)!!
+                User.userList.add(user)
 
                 if ((
                         user.login.lowercase() == email.lowercase() ||

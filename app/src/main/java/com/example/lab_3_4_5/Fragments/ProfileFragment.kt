@@ -104,24 +104,43 @@ class ProfileFragment : Fragment() {
                 newPassword = currentUser?.password ?: newPassword
             }
 
-            val updatedUser = currentUser?.let { user ->
-                User(
-                    user.id,
-                    newLogin,
-                    newEmail,
-                    newPassword
-                )
-            }
+            val firebaseDBUser = FirebaseDatabase.getInstance().getReference("Users")
+            firebaseDB.get().addOnCompleteListener {
+                val userListFromDB = it.result
 
-            firebaseDB.child(currentUser?.id.toString()).setValue(updatedUser)
-                .addOnCompleteListener {
-                    saveUserData(newEmail, newPassword)
-                    password.text = ""
-                    Toast.makeText(context, "Пользователь обновлён", Toast.LENGTH_SHORT).show()
+                for (user in userListFromDB.children) {
+                    val userInDb = user.getValue(User::class.java)
+
+                    if (
+                        userInDb?.id != User.getCurrentUser()?.id &&
+                        (userInDb?.login?.lowercase() == newLogin.lowercase() ||
+                        userInDb?.email?.lowercase() == newEmail.lowercase())
+                    ) {
+                        Toast.makeText(context, "Такой пользователь уже существует", Toast.LENGTH_SHORT).show()
+                        return@addOnCompleteListener
+                    }
                 }
-                .addOnFailureListener {
-                    Toast.makeText(context, "Ошибка обновлении данныз о пользователе", Toast.LENGTH_SHORT).show()
+
+                val updatedUser = currentUser?.let { user ->
+                    User(
+                        user.id,
+                        newLogin,
+                        newEmail,
+                        newPassword
+                    )
                 }
+
+                firebaseDB.child(currentUser?.id.toString()).setValue(updatedUser)
+                    .addOnCompleteListener {
+                        User.setCurrentUser(updatedUser)
+                        saveUserData(newEmail, newPassword)
+                        password.text = ""
+                        Toast.makeText(context, "Пользователь обновлён", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(context, "Ошибка обновлении данныз о пользователе", Toast.LENGTH_SHORT).show()
+                    }
+            }
         }
 
         logoutBtn.setOnClickListener {
