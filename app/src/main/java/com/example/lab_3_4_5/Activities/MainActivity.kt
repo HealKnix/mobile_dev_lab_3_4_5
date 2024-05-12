@@ -15,6 +15,7 @@ import com.example.lab_3_4_5.Models.User
 import com.example.lab_3_4_5.R
 import com.google.firebase.database.FirebaseDatabase
 
+
 class MainActivity : AppCompatActivity() {
     private val firebaseRef = FirebaseDatabase.getInstance().getReference("Users")
     private lateinit var sharedPreferences: SharedPreferences

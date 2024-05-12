@@ -9,14 +9,18 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.example.lab_3_4_5.Adapters.PostAdapter
 import com.example.lab_3_4_5.Models.Post
 import com.example.lab_3_4_5.Models.User
 import com.example.lab_3_4_5.R
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.database.FirebaseDatabase
+import org.json.JSONArray
+import org.json.JSONObject
 import java.util.Date
+import kotlin.random.Random
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,6 +46,14 @@ class PostCreateFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+    }
+
+    private fun findNotEmptyArea(areas: JSONArray): JSONObject {
+        var area = areas.getJSONObject(Random.nextInt(0, areas.length()-1))
+        if (area.getJSONArray("areas").length() == 0) {
+            area = findNotEmptyArea(areas)
+        }
+        return area
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -70,27 +82,44 @@ class PostCreateFragment : Fragment() {
             if (adapter.getPosts().isNotEmpty())
                 postId = adapter.getPosts().last().id + 1
 
-            val timeNow = Date()
+            val url = "https://api.hh.ru/areas"
+            val queue = Volley.newRequestQueue(context)
+            val request = StringRequest(
+                Request.Method.GET,
+                url,
+                { result ->
+                    val areas = JSONArray(result).getJSONObject(0).getJSONArray("areas")
+                    val area = findNotEmptyArea(areas)
+                    val randomCity = Random.nextInt(0, area.length()-1)
+                    val cities = area.getJSONArray("areas")
+                    val city = cities.getJSONObject(randomCity).getString("name")
 
-            val newPost = Post(
-                postId,
-                postTitle.text.toString(),
-                postDescription.text.toString(),
-                User.getCurrentUser()?.id ?: -1,
-                mutableListOf<Int>(),
-                0,
-                Date().toLocaleString(),
-                Date().toLocaleString(),
+                    val newPost = Post(
+                        postId,
+                        postTitle.text.toString(),
+                        postDescription.text.toString(),
+                        User.getCurrentUser()?.id ?: -1,
+                        mutableListOf<Int>(),
+                        0,
+                        Date().toLocaleString(),
+                        Date().toLocaleString(),
+                        city
+                    )
+
+                    firebaseRef.child(postId.toString()).setValue(newPost)
+                        .addOnCompleteListener {
+                            Toast.makeText(context, "Пост '${postTitle.text}' создан", Toast.LENGTH_SHORT).show()
+                            replaceFragment(PostListFragment())
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(context, "Ошибка создания поста", Toast.LENGTH_SHORT).show()
+                        }
+                },
+                { error ->
+                    Toast.makeText(context, "Ошибка запроса к API", Toast.LENGTH_SHORT).show()
+                }
             )
-
-            firebaseRef.child(postId.toString()).setValue(newPost)
-                .addOnCompleteListener {
-                    Toast.makeText(context, "Пост '${postTitle.text}' создан", Toast.LENGTH_SHORT).show()
-                    replaceFragment(PostListFragment())
-                }
-                .addOnFailureListener {
-                    Toast.makeText(context, "Ошибка создания поста", Toast.LENGTH_SHORT).show()
-                }
+            queue.add(request)
         }
 
         return view

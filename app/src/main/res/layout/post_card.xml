@@ -111,7 +111,16 @@
                         android:textAlignment="textEnd"
                         android:textColor="@color/text_primary_3"
                         android:textSize="14sp" />
+
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/city_where_by"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Привет из Иркутск!"
+                    android:textColor="@color/text_primary_3"
+                    android:visibility="gone" />
 
                 <Space
                     android:layout_width="match_parent"

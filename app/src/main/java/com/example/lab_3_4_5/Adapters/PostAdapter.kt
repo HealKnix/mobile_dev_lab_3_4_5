@@ -12,8 +12,6 @@ import com.example.lab_3_4_5.Models.User
 import com.example.lab_3_4_5.R
 import com.example.lab_3_4_5.databinding.PostCardBinding
 import com.google.firebase.database.FirebaseDatabase
-import java.time.LocalDateTime
-import java.util.Date
 
 class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
     companion object {
@@ -90,22 +88,22 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
             binding.postTitle.text = post.title
             binding.postText.text = post.text
 
-            val fireDBUsers = FirebaseDatabase.getInstance().getReference("Users")
-            fireDBUsers.get().addOnCompleteListener {
-                val usersFromDB = it.result
-
-                for (userFromDB in usersFromDB.children) {
-                    val user = userFromDB.getValue(User::class.java)
-
-                    if (post.createdByUserId == user?.id) {
-                        binding.createdByUserName.text = "@${user?.login}".lowercase()
-                        return@addOnCompleteListener
-                    }
+            for (user in User.userList) {
+                if (post.createdByUserId == user.id) {
+                    binding.createdByUserName.text = "@${user.login}".lowercase()
+                    break
                 }
             }
 
             binding.postLikeCount.text = post.likedByUsers.count().toString()
             binding.createdDate.text = post.createdAt
+
+            if (post.cityWhereBy != null) {
+                binding.cityWhereBy.visibility = View.VISIBLE
+                binding.cityWhereBy.text = "Привет из ${post.cityWhereBy}!"
+            } else {
+                binding.cityWhereBy.visibility = View.GONE
+            }
 
             var isLiked = false
 

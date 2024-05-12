@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lab_3_4_5.Adapters.PostAdapter
 import com.example.lab_3_4_5.Models.Post
+import com.example.lab_3_4_5.Models.User
 import com.example.lab_3_4_5.R
 import com.example.lab_3_4_5.databinding.FragmentPostListBinding
 import com.google.firebase.database.DataSnapshot
@@ -45,6 +46,17 @@ class PostListFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
         binding = FragmentPostListBinding.inflate(layoutInflater)
+
+        val fireDBUsers = FirebaseDatabase.getInstance().getReference("Users")
+        fireDBUsers.get().addOnCompleteListener {
+            val usersFromDB = it.result
+            User.userList.clear()
+
+            for (userFromDB in usersFromDB.children) {
+                val user = userFromDB.getValue(User::class.java)
+                User.userList.add(user ?: User())
+            }
+        }
     }
 
     private fun fetchPostsData() {
