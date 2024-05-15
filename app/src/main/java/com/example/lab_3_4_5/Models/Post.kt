@@ -1,6 +1,6 @@
 package com.example.lab_3_4_5.Models
 
-data class Post(
+data class Post (
     var id: Int = -1,
     var title: String = "",
     var text: String = "",

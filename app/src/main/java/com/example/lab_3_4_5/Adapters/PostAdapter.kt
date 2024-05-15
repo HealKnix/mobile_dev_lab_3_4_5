@@ -25,7 +25,9 @@ class PostAdapter : RecyclerView.Adapter<PostAdapter.PostHolder>() {
     }
 
     override fun onBindViewHolder(holder: PostAdapter.PostHolder, position: Int) {
-        holder.bind(postList[position])
+        val sortedList = postList.sortedByDescending{ it.id }
+        Log.d("1111", sortedList.toString())
+        holder.bind(sortedList[position])
     }
 
     override fun getItemCount(): Int {

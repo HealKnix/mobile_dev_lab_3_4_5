@@ -3,7 +3,7 @@ package com.example.lab_3_4_5.Models
 import java.math.BigInteger
 import java.security.MessageDigest
 
-data class User(
+data class User (
     var id: Int = -1,
     var login: String = "",
     var email: String = "",
