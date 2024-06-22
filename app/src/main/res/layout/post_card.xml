@@ -119,8 +119,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Привет из Иркутск!"
-                    android:textColor="@color/text_primary_3"
-                    android:visibility="gone" />
+                    android:textColor="@color/text_primary_3" />
 
                 <Space
                     android:layout_width="match_parent"
