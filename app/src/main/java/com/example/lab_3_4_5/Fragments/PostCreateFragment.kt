@@ -2,6 +2,7 @@ package com.example.lab_3_4_5.Fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,10 +14,13 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.lab_3_4_5.Adapters.PostAdapter
+import com.example.lab_3_4_5.Models.Place
 import com.example.lab_3_4_5.Models.Post
 import com.example.lab_3_4_5.Models.User
 import com.example.lab_3_4_5.R
 import com.google.firebase.database.FirebaseDatabase
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.Date
@@ -48,9 +52,9 @@ class PostCreateFragment : Fragment() {
         }
     }
 
-    private fun findNotEmptyArea(areas: JSONArray): JSONObject {
-        var area = areas.getJSONObject(Random.nextInt(0, areas.length()-1))
-        if (area.getJSONArray("areas").length() == 0) {
+    private fun findNotEmptyArea(areas: List<Place>): Place {
+        var area = areas[Random.nextInt(0, areas.size-1)]
+        if (area.areas.isEmpty()) {
             area = findNotEmptyArea(areas)
         }
         return area
@@ -88,11 +92,15 @@ class PostCreateFragment : Fragment() {
                 Request.Method.GET,
                 url,
                 { result ->
-                    val areas = JSONArray(result).getJSONObject(0).getJSONArray("areas")
+                    val gson = Gson()
+                    val jsonInput = result.trimIndent()
+                    val type = object : TypeToken<List<Place>>() {}.type
+
+                    val areas: List<Place> = gson.fromJson(jsonInput, type)
                     val area = findNotEmptyArea(areas)
-                    val randomCity = Random.nextInt(0, area.length()-1)
-                    val cities = area.getJSONArray("areas")
-                    val city = cities.getJSONObject(randomCity).getString("name")
+                    val randomCityId = Random.nextInt(0, areas.size - 1)
+                    val cities = area.areas
+                    val cityName = cities[randomCityId].name
 
                     val newPost = Post(
                         postId,
@@ -103,7 +111,7 @@ class PostCreateFragment : Fragment() {
                         0,
                         Date().toLocaleString(),
                         Date().toLocaleString(),
-                        city
+                        cityName
                     )
 
                     firebaseRef.child(postId.toString()).setValue(newPost)
